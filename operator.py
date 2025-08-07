@@ -337,7 +337,7 @@ class SCENE_OT_BTSculpt_Add_Mirror(Operator):
     def poll(cls, context):
         if context.object:
             if context.object.type == 'MESH' or context.object.type == 'CURVE':
-                return context.mode == "OBJECT" or context.mode == "SCULPT"
+                return True
         return False
 
     def execute(self, context):
