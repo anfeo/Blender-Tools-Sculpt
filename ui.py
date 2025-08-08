@@ -29,35 +29,35 @@ class SCENE_PT_EAD_SETUP(Panel):
 
         cylinder = row.operator(operator.SCENE_OT_BTSculpt_Add_ParametricPrimitive.bl_idname, icon='MESH_CYLINDER', text="")
         cylinder.type = 'CYLINDER'
-        cylinder.arg = "Add Cylinder"
+        cylinder.arg = "Add Cylinder - Hold Shift to add object to cursor location"
 
         cube = row.operator(operator.SCENE_OT_BTSculpt_Add_ParametricPrimitive.bl_idname, icon='MESH_CUBE', text="")
         cube.type = 'CUBE'
-        cube.arg = "Add Cube"
+        cube.arg = "Add Cube - Hold Shift to add object to cursor location"
 
         torus = row.operator(operator.SCENE_OT_BTSculpt_Add_ParametricPrimitive.bl_idname, icon='MESH_TORUS', text="")
         torus.type = 'TORUS'
-        torus.arg = "Add Torus"
+        torus.arg = "Add Torus - Hold Shift to add object to cursor location"
 
         cone = row.operator(operator.SCENE_OT_BTSculpt_Add_ParametricPrimitive.bl_idname, icon='MESH_CONE', text="")
         cone.type = 'CONE'
-        cone.arg = "Add Cone"
+        cone.arg = "Add Cone - Hold Shift to add object to cursor location"
 
         sphere = row.operator(operator.SCENE_OT_BTSculpt_Add_ParametricPrimitive.bl_idname, icon='MESH_UVSPHERE', text="")
         sphere.type = 'SPHERE'
-        sphere.arg = "Add UV Sphere"
+        sphere.arg = "Add UV Sphere - Hold Shift to add object to cursor location"
 
         sphere = row.operator(operator.SCENE_OT_BTSculpt_Add_ParametricPrimitive.bl_idname, icon='SHADING_TEXTURE', text="")
         sphere.type = 'SPHERE_CUBE'
-        sphere.arg = "Add Cube Sphere"
+        sphere.arg = "Add Cube Sphere - Hold Shift to add object to cursor location"
 
         pipe = row.operator(operator.SCENE_OT_BTSculpt_Add_ParametricPrimitive.bl_idname, icon='META_CAPSULE', text="")
         pipe.type = 'PIPE'
-        pipe.arg = "Add Pipe"
+        pipe.arg = "Add Pipe - Hold Shift to add object to cursor location"
 
         capsule = row.operator(operator.SCENE_OT_BTSculpt_Add_ParametricPrimitive.bl_idname, icon='MESH_CAPSULE', text="")
         capsule.type = 'CAPSULE'
-        capsule.arg = "Add Capsule"
+        capsule.arg = "Add Capsule - Hold Shift to add object to cursor location"
 
         if context.object:
             for gn_modifier in context.object.modifiers:
@@ -69,6 +69,8 @@ class SCENE_PT_EAD_SETUP(Panel):
                 if 'BT_GN_CURVE_MODIFIER' in gn_modifier.name:
                     # panel_header, panel_body = layout.panel("")
                     ng = gn_modifier.node_group
+                    shading_smooth = ng.interface.items_tree.get('Shading Smooth')
+                    angle = ng.interface.items_tree.get('Angle')
                     # row = panel_header.row()
                     row = layout.row()
                     row.label(text=context.object.name+" parametric setup")
@@ -108,6 +110,13 @@ class SCENE_PT_EAD_SETUP(Panel):
                                     if gn_modifier['Socket_13'] == 1:  # 'LOOPS':
                                         if item.identifier == 'Socket_20':
                                             continue
+                                    if not gn_modifier['Socket_22']:  # 'LOOPS':
+                                        if item.identifier == 'Socket_23':
+                                            continue
+                                    if shading_smooth and angle:
+                                        if not gn_modifier[shading_smooth.identifier]:  # 'LOOPS':
+                                            if item.identifier == angle.identifier:
+                                                continue
                                     row = panel_body.row()
 
                                     if item.socket_type == "NodeSocketCollection":
@@ -128,7 +137,8 @@ class SCENE_PT_EAD_SETUP(Panel):
                 ):
 
                     ng = gn_modifier.node_group
-
+                    shading_smooth = ng.interface.items_tree.get('Shading Smooth')
+                    angle = ng.interface.items_tree.get('Angle')
                     row = layout.row()
                     row.label(text=context.object.name + " parametric setup")
                     panel_header = None
@@ -144,6 +154,11 @@ class SCENE_PT_EAD_SETUP(Panel):
 
                             if item.item_type == "SOCKET" and panel_header and panel_body:
                                 if item.identifier in gn_modifier:
+
+                                    if shading_smooth and angle:
+                                        if not gn_modifier[shading_smooth.identifier]:  # 'LOOPS':
+                                            if item.identifier == angle.identifier:
+                                                continue
 
                                     row = panel_body.row()
 

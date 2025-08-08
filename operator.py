@@ -69,28 +69,6 @@ class SCENE_OT_BTSculpt_Add_Subdivision(Operator):
         layout.prop(self, "levels")
 
 
-class SCENE_OT_BTSculpt_Add_Capsule(Operator):
-    """Add Capsule for Sculpt"""
-    bl_idname = "scene.btsculpt_add_capsule"
-    bl_label = "Add Capsule"
-    bl_options = {'REGISTER', 'UNDO'}
-
-    type: StringProperty(default='CAPSULE')
-    radius: FloatProperty(name="Radius", default=0.5, min=0.0)
-    height: FloatProperty(name="Height", default=2.5, min=0.0)
-    segments: IntProperty(name="Segments", default=24)
-    rings: IntProperty(name="Rings", default=8)
-    subdivision: IntProperty(name="Subdivision", default=1)
-
-    @classmethod
-    def poll(cls, context):
-        return context.mode == "OBJECT" or context.mode == "SCULPT"
-
-    def execute(self, context):
-        if self.type == 'CAPSULE':
-            primitive.create_capsule(self,"BT_Capsule")
-
-        return {'FINISHED'}
 
 
 class SCENE_OT_BTSculpt_ARRAY(Operator):
@@ -123,7 +101,7 @@ class SCENE_OT_BTSculpt_Add_ParametricPrimitive(Operator):
 
     arg: bpy.props.StringProperty()
     type: StringProperty(default='CAPSULE')
-
+    location: FloatVectorProperty(default=(0.0, 0.0, 0.0))
     @classmethod
     def description(cls, context, properties):
         return properties.arg
@@ -139,29 +117,12 @@ class SCENE_OT_BTSculpt_Add_ParametricPrimitive(Operator):
         function.add_gn_modifier(context.object, f'BT_PARAMETRIC_{self.type}', mod_name="BT_GN_MESH_PRIMITIVE")
         scale = context.scene.unit_settings.scale_length
         context.object.scale *= scale
+        context.object.location = self.location
         return {'FINISHED'}
-
-# class SCENE_OT_BTSculpt_Add_Primitive(Operator):
-#     """Add Primitive for Sculpt"""
-#     bl_idname = "scene.btsculpt_add_primitive"
-#     bl_label = "Add Primitive"
-#     bl_options = {'REGISTER', 'UNDO'}
-#
-#     angle: FloatProperty(name="Angle", default=70.0, min=0.0, max=360.0, step=100)
-#     crease: FloatProperty(name="Crease", default=0.8 , min=0.0, max=1.0, step=1)
-#     subdivision: IntProperty(name="Subdivision", default=4)
-#     type: StringProperty(name="Type", default="")
-#
-#     @classmethod
-#     def poll(cls, context):
-#
-#         return context.mode == "OBJECT" or context.mode == "SCULPT"
-#
-#     def execute (self, context):
-#
-#         function.sculpt_mesh_add (self, context)
-#
-#         return {'FINISHED'}
+    def invoke(self, context, event):
+        if event.shift:
+            self.location = context.scene.cursor.location
+        return self.execute(context)
 
 
 class SCENE_OT_BTSculpt_Add_Curve(Operator):

@@ -1,7 +1,7 @@
 bl_info = {
     "name": "Blender Tools Sculpt",
     "author": "Alfonso Annarumma",
-    "version": (0, 0, 8),
+    "version": (0, 0, 9),
     "blender": (4, 5, 0),
     "location": "Toolshelf > Blender Tools Sculpt",
     "warning": "",
@@ -71,7 +71,6 @@ classes = (
     operator.SCENE_OT_BTSculpt_CurveUseSmooth,
     operator.SCENE_OT_BTSculpt_ConvertCurveToMesh,
     operator.SCENE_OT_BTSculpt_Add_Subdivision,
-    operator.SCENE_OT_BTSculpt_Add_Capsule,
     operator.SCENE_OT_BTSculpt_Add_ParametricPrimitive,
     operator.SCENE_OT_BTSculpt_ConvertToMesh,
     operator.SCENE_OT_ImagesFromFolder,
