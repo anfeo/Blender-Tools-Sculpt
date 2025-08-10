@@ -53,8 +53,8 @@ def copy_presets_to_user():
     for file in os.listdir(source_dir):
         src = os.path.join(source_dir, file)
         dst = os.path.join(target_dir, file)
-        if not os.path.exists(dst):
-            shutil.copy(src, dst)
+
+        shutil.copy(src, dst)
 
 
 class SCENE_PG_BTSculpt_Prop(PropertyGroup):
