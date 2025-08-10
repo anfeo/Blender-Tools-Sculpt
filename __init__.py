@@ -1,7 +1,7 @@
 bl_info = {
     "name": "Blender Tools Sculpt",
     "author": "Alfonso Annarumma",
-    "version": (0, 0, 9),
+    "version": (0, 1, 0),
     "blender": (4, 5, 0),
     "location": "Toolshelf > Blender Tools Sculpt",
     "warning": "",
