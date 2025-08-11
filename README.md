@@ -18,6 +18,8 @@ Radial Array:
 
 Linear Grid Array:
 <img width="1044" height="651" alt="image" src="https://github.com/user-attachments/assets/00e1f439-b7b9-4932-9ee7-2c6639e811b0" />
+Brick Mode:
+<img width="1189" height="637" alt="image" src="https://github.com/user-attachments/assets/c966140a-ef7c-4a8a-b14f-c87e7dec5af5" />
 
 Lath revolution:
 <img width="947" height="847" alt="image" src="https://github.com/user-attachments/assets/9972600b-077b-4dbb-90ad-7060ace65203" />
