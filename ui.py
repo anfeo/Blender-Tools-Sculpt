@@ -192,6 +192,10 @@ class SCENE_PT_EAD_SETUP(Panel):
             revolution.type = 'REVOLUTION'
             revolution.arg = "Draw a profile to create a profile for a vase, revolution on Z axis"
 
+            # row = layout.row()
+            mesh_draw = row.operator(operator.SCENE_OT_BTSculpt_Add_Curve.bl_idname, icon='OUTLINER_OB_VOLUME', text="")
+            mesh_draw.type = 'MESH_2D'
+            mesh_draw.arg = "Draw Mesh from 2D Curve"
 
         ############ MODIFIERS ##################
         row = layout.row()
